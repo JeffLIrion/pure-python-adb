@@ -1,4 +1,4 @@
-from adb.plugins import Plugin
+from adb_messenger.plugins import Plugin
 
 
 class Source:

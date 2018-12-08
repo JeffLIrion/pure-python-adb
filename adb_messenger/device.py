@@ -2,16 +2,16 @@ import re
 import os
 import logging
 
-from adb.command.transport import Transport
-from adb.command.serial import Serial
+from adb_messenger.command.transport import Transport
+from adb_messenger.command.serial import Serial
 
-from adb.plugins.device.input import Input
-from adb.plugins.device.utils import Utils
-from adb.plugins.device.wm import WM
-from adb.plugins.device.traffic import Traffic
-from adb.plugins.device.stat import Stat
+from adb_messenger.plugins.device.input import Input
+from adb_messenger.plugins.device.utils import Utils
+from adb_messenger.plugins.device.wm import WM
+from adb_messenger.plugins.device.traffic import Traffic
+from adb_messenger.plugins.device.stat import Stat
 
-from adb.sync import Sync
+from adb_messenger.sync import Sync
 
 from adb import InstallError
 

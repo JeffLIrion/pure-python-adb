@@ -28,7 +28,7 @@ Installation
 
 .. code-block:: console
 
-    $pip install -U pure-python-adb
+    $pip install -U pure-python-adb-homeassistant
 
 Examples
 ========
@@ -38,7 +38,7 @@ Connect to adb server and get the version
 
 .. code-block:: python
 
-    from adb.client import Client as AdbClient
+    from adb_messenger.client import Client as AdbClient
     # Default is "127.0.0.1" and 5037
     client = AdbClient(host="127.0.0.1", port=5037)
     print(client.version())
@@ -50,7 +50,7 @@ Connect to a device
 
 .. code-block:: python
 
-    from adb.client import Client as AdbClient
+    from adb_messenger.client import Client as AdbClient
     # Default is "127.0.0.1" and 5037
     client = AdbClient(host="127.0.0.1", port=5037)
     device = client.device("emulator-5554")
@@ -61,7 +61,7 @@ List all devices ( adb devices ) and install/uninstall an APK on all devices
 
 .. code-block:: python
 
-    from adb.client import Client as AdbClient
+    from adb_messenger.client import Client as AdbClient
 
     apk_path = "example.apk"
 
@@ -85,7 +85,7 @@ adb shell
 
 .. code-block:: python
 
-    from adb.client import Client as AdbClient
+    from adb_messenger.client import Client as AdbClient
     # Default is "127.0.0.1" and 5037
     client = AdbClient(host="127.0.0.1", port=5037)
     device = client.device("emulator-5554")
@@ -102,7 +102,7 @@ adb shell
 
         connection.close()
 
-    from adb.client import Client as AdbClient
+    from adb_messenger.client import Client as AdbClient
     # Default is "127.0.0.1" and 5037
     client = AdbClient(host="127.0.0.1", port=5037)
     device = client.device("emulator-5554")
@@ -114,7 +114,7 @@ Screenshot
 
 .. code-block:: python
 
-    from adb.client import Client as AdbClient
+    from adb_messenger.client import Client as AdbClient
     client = AdbClient(host="127.0.0.1", port=5037)
     device = client.device("emulator-5554")
     result = device.screencap()
@@ -126,7 +126,7 @@ Push
 
 .. code-block:: python
 
-    from adb.client import Client as AdbClient
+    from adb_messenger.client import Client as AdbClient
     client = AdbClient(host="127.0.0.1", port=5037)
     device = client.device("emulator-5554")
 
@@ -137,7 +137,7 @@ Pull
 
 .. code-block:: python
 
-    from adb.client import Client as AdbClient
+    from adb_messenger.client import Client as AdbClient
     client = AdbClient(host="127.0.0.1", port=5037)
     device = client.device("emulator-5554")
 

@@ -1,1 +1,1 @@
-adb/_version.py export-subst
+adb_messenger/_version.py export-subst

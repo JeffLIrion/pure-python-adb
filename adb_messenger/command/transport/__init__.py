@@ -2,8 +2,8 @@ import re
 import time
 import logging
 
-from adb import ClearError
-from adb.command import Command
+from adb_messenger import ClearError
+from adb_messenger.command import Command
 
 logger = logging.getLogger(__name__)
 

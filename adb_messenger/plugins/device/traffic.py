@@ -1,7 +1,7 @@
 import re
 from collections import namedtuple
 
-from adb.plugins import Plugin
+from adb_messenger.plugins import Plugin
 
 State = namedtuple("TrafficState", [
     'idx',
