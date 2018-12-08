@@ -1,8 +1,8 @@
 import struct
 import socket
 
-from adb.protocol import Protocol
-from adb.utils import logger
+from adb_messenger.protocol import Protocol
+from adb_messenger.utils import logger
 
 logger = logger.get_logger(__name__)
 

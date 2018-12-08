@@ -1,4 +1,4 @@
-from adb.device import Device
+from adb_messenger.device import Device
 
 
 class Application:

@@ -1,7 +1,7 @@
 import logging
 
-from adb.command.host import Host
-from adb.connection import Connection
+from adb_messenger.command.host import Host
+from adb_messenger.connection import Connection
 
 logger = logging.getLogger(__name__)
 

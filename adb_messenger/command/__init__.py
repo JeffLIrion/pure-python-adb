@@ -1,4 +1,4 @@
-from adb.connection import Connection
+from adb_messenger.connection import Connection
 
 
 class Command:

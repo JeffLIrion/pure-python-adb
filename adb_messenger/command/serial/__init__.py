@@ -1,4 +1,4 @@
-from adb.command import Command
+from adb_messenger.command import Command
 
 
 class Serial(Command):

@@ -1,10 +1,10 @@
 import re
 import time
 
-from adb import ClearError
-from adb.command import Command
+from adb_messenger import ClearError
+from adb_messenger.command import Command
 
-from adb.utils.logger import get_logger
+from adb_messenger.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
