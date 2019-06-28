@@ -1,10 +1,10 @@
 import logging
 
-logging.getLogger("adb").setLevel(logging.CRITICAL)
+logging.getLogger("adb_messenger").setLevel(logging.CRITICAL)
 logging.basicConfig()
 
 class AdbLogging:
-    PACKAGE_NAME = "adb"
+    PACKAGE_NAME = "adb_messenger"
     DEFAULT_FORMAT =  logging.Formatter(fmt='%(asctime)s,%(msecs)d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
                               datefmt='%d-%m-%Y:%H:%M:%S')
     DEFAULT_LEVEL = logging.CRITICAL
@@ -12,7 +12,7 @@ class AdbLogging:
     @classmethod
     def get_logger(cls, name):
         if not name.startswith(cls.PACKAGE_NAME):
-            raise RuntimeError("The package logger name should be 'adb.xxx.xxx' but {}".format(name))
+            raise RuntimeError("The package logger name should be 'adb_messenger.xxx.xxx' but {}".format(name))
 
         logger = logging.getLogger(name)
         if logger.handlers:

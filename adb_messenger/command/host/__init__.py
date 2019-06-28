@@ -1,5 +1,5 @@
-from adb.device import Device
-from adb.command import Command
+from adb_messenger.device import Device
+from adb_messenger.command import Command
 
 
 class Host(Command):

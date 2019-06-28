@@ -1,6 +1,6 @@
-from adb.command.host import Host
-from adb.connection import Connection
-from adb.utils.logger import AdbLogging
+from adb_messenger.command.host import Host
+from adb_messenger.connection import Connection
+from adb_messenger.utils.logger import AdbLogging
 
 logger = AdbLogging.get_logger(__name__)
 

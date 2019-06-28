@@ -1,8 +1,8 @@
-from adb.utils.logger import AdbLogging
+from adb_messenger.utils.logger import AdbLogging
 import logging
 
 def test_without_logging(capsys):
-    logger = AdbLogging.get_logger("adb.test")
+    logger = AdbLogging.get_logger("adb_messenger.test")
     logger.addHandler(logging.StreamHandler())
 
     logger.info("INFO message")
@@ -20,7 +20,7 @@ def test_without_logging(capsys):
     assert not captured.err
 
 def test_without_log_message_after_set_root_logger_level(capsys):
-    logger = AdbLogging.get_logger("adb.test")
+    logger = AdbLogging.get_logger("adb_messenger.test")
     logger.addHandler(logging.StreamHandler())
 
     logging.getLogger().setLevel(logging.DEBUG)

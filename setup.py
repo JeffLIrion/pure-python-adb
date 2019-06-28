@@ -21,7 +21,7 @@ classifiers = [
 ]
 
 setup(
-    name='pure-python-adb',
+    name='pure-python-adb-homeassistant',
     version="0.1.7-dev",
     description='Pure python implementation of the adb client',
     long_description=readme + '\n\n' + history,
