@@ -61,8 +61,6 @@ class Sync:
         await self.connection._check_status()
 
     async def pull(self, src, dest):
-        error = None
-
         # RECV
         await self._send_str(Protocol.RECV, src)
 
