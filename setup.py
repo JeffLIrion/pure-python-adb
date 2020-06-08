@@ -16,12 +16,11 @@ classifiers = [
     'Intended Audience :: Developers',
     'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 2.7',
     'Topic :: Software Development :: Testing',
 ]
 
 setup(
-    name='pure-python-adb',
+    name='aio-pure-python-adb',
     version="0.2.5-dev",
     description='Pure python implementation of the adb client',
     long_description=readme + '\n\n' + history,
