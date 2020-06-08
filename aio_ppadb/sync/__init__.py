@@ -8,7 +8,7 @@ from .stats import S_IFREG
 from ..protocol import Protocol
 
 
-logger = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 class Sync:
@@ -39,11 +39,8 @@ class Sync:
 
         # SEND
         mode = mode | S_IFREG
-        args = "{dest},{mode}".format(
-            dest=dest,
-            mode=mode
-        )
-        self._send_str(Protocol.SEND, args)
+        args = "{dest},{mode}".format(dest=dest, mode=mode)
+        await self._send_str(Protocol.SEND, args)
 
         # DATA
         with open(src, 'rb') as stream:
@@ -53,15 +50,15 @@ class Sync:
                     break
 
                 sent_size += len(chunk)
-                self._send_length(Protocol.DATA, len(chunk))
-                self.connection.write(chunk)
+                await self._send_length(Protocol.DATA, len(chunk))
+                await self.connection.write(chunk)
 
                 if progress is not None:
                     progress(src, total_size, sent_size)
 
         # DONE
-        self._send_length(Protocol.DONE, timestamp)
-        self.connection._check_status()
+        await self._send_length(Protocol.DONE, timestamp)
+        await self.connection._check_status()
 
     async def pull(self, src, dest):
         error = None
@@ -92,19 +89,19 @@ class Sync:
     def _little_endian(self, n):
         return struct.pack('<I', n)
 
-    def _read_data(self):
-        length = self._integer(self.connection.read(4))[0]
+    async def _read_data(self):
+        length = self._integer(await self.connection.read(4))[0]
         data = bytearray()
         while len(data) < length:
-            data += self.connection.read(length - len(data))
+            data += await self.connection.read(length - len(data))
         return data
 
-    def _send_length(self, cmd, length):
+    async def _send_length(self, cmd, length):
         le_len = self._little_endian(length)
         data = cmd.encode() + le_len
 
-        logger.debug("Send length: {}".format(data))
-        self.connection.write(data)
+        _LOGGER.debug("Send length: {}".format(data))
+        await self.connection.write(data)
 
     async def _send_str(self, cmd, args):
         """
@@ -113,10 +110,10 @@ class Sync:
         Length:
             {4}{4}{str length}
         """
-        logger.debug("{} {}".format(cmd, args))
+        _LOGGER.debug("{} {}".format(cmd, args))
         args = args.encode('utf-8')
 
         le_args_len = self._little_endian(len(args))
         data = cmd.encode() + le_args_len + args
-        logger.debug("Send string: {}".format(data))
+        _LOGGER.debug("Send string: {}".format(data))
         await self.connection.write(data)

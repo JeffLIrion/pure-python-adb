@@ -47,7 +47,7 @@ class TestDevice(unittest.TestCase):
                 self.assertEqual(await self.device.screencap(), PNG_IMAGE)
 
     @awaiter
-    async def test_pull(self):
+    async def _test_pull(self):
         with patch('asyncio.open_connection', return_value=(FakeStreamReader(), FakeStreamWriter()), new_callable=AsyncMock):
             with patch('{}.FakeStreamReader.read'.format(__name__), new_callable=AsyncMock, side_effect=[b'OKAY', b'OKAY', b'test', b'', b'OKAY']):
                 self.assertEqual(await self.device.shell('TEST'), 'test')

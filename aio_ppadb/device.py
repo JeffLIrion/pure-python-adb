@@ -46,7 +46,7 @@ class Device(Transport, Serial, Input, Utils, WM, Traffic, CPUStat, BatteryStats
 
         return conn
 
-    def _push(self, src, dest, mode, progress):
+    async def _push(self, src, dest, mode, progress):
         # Create a new connection for file transfer
         sync_conn = await self.sync()
         sync = Sync(sync_conn)
@@ -54,7 +54,7 @@ class Device(Transport, Serial, Input, Utils, WM, Traffic, CPUStat, BatteryStats
         with sync_conn:
             await sync.push(src, dest, mode, progress)
 
-    def push(self, src, dest, mode=0o644, progress=None):
+    async def push(self, src, dest, mode=0o644, progress=None):
         if not os.path.exists(src):
             raise FileNotFoundError("Cannot find {}".format(src))
 
