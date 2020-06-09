@@ -12,6 +12,7 @@ from unittest.mock import mock_open, patch
 sys.path.insert(0, '..')
 
 from aio_ppadb.client import Client
+from aio_ppadb.protocol import Protocol
 from aio_ppadb.sync import Sync
 
 from .async_wrapper import AsyncMock, awaiter
@@ -37,6 +38,13 @@ class TestDevice(unittest.TestCase):
         with patch('asyncio.open_connection', return_value=(FakeStreamReader(), FakeStreamWriter()), new_callable=AsyncMock):
             with patch('{}.FakeStreamReader.read'.format(__name__), new_callable=AsyncMock, side_effect=[b'OKAY', b'OKAY', b'test', b'', b'OKAY']):
                 self.assertEqual(await self.device.shell('TEST'), 'test')
+
+    @awaiter
+    async def test_shell_error(self):
+        with patch('asyncio.open_connection', return_value=(FakeStreamReader(), FakeStreamWriter()), new_callable=AsyncMock):
+            with patch('{}.FakeStreamReader.read'.format(__name__), new_callable=AsyncMock, return_value=b'FAIL'):
+                with self.assertRaises(RuntimeError):
+                    self.assertEqual(await self.device.shell('TEST'), 'test')
 
     @awaiter
     async def test_screencap(self):
@@ -90,6 +98,12 @@ class TestDevice(unittest.TestCase):
                 with patch('aio_ppadb.sync.open', mock_open()):
                     #with self.assertRaises(RuntimeError):
                     await self.device.pull('src', 'dest')
+
+
+class TestProtocol(unittest.TestCase):
+    def test_encode_decode_length(self):
+        for i in range(16 ** 2):
+            self.assertEqual(i, Protocol.decode_length(Protocol.encode_length(i)))
 
 '''async def shell(self, cmd, handler=None, timeout=None):
         conn = await self.create_connection(timeout=timeout)

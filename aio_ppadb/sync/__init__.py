@@ -1,6 +1,5 @@
 import logging
 import struct
-import time
 import os
 
 from .stats import S_IFREG
@@ -12,16 +11,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Sync:
-    TEMP_PATH = '/data/local/tmp'
-    DEFAULT_CHMOD = 0o644
     DATA_MAX_LENGTH = 65536
 
     def __init__(self, connection):
         self.connection = connection
-
-    @staticmethod
-    def temp(path):
-        return "{}/{}".format(Sync.TEMP_PATH, os.path.basename(path))
 
     async def push(self, src, dest, mode, progress=None):
         """Push from local path |src| to |dest| on device.

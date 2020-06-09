@@ -28,7 +28,7 @@ class Connection:
 
         try:
             if self.timeout:
-                self.reader, self.writer = await asyncio.wait_for(asyncio.open_connection(self.host, self.port), timeout)
+                self.reader, self.writer = await asyncio.wait_for(asyncio.open_connection(self.host, self.port), self.timeout)
 
             self.reader, self.writer = await asyncio.open_connection(self.host, self.port)
 
@@ -58,12 +58,6 @@ class Connection:
     async def _recv(self, length):
         return await asyncio.wait_for(self.reader.read(length), self.timeout)
 
-    def _recv_into(self, length):
-        recv = bytearray(length)
-        view = memoryview(recv)
-        self.socket.recv_into(view)
-        return recv
-
     async def _send(self, data):
         self.writer.write(data)
         await asyncio.wait_for(self.writer.drain(), self.timeout)
@@ -71,8 +65,6 @@ class Connection:
     async def receive(self):
         nob = int((await self._recv(4)).decode('utf-8'), 16)
         return (await self._recv(nob)).decode('utf-8')
-        # recv = self._recv_into(nob)
-        # return recv.decode('utf-8')
 
     async def send(self, msg):
         msg = Protocol.encode_data(msg)
@@ -87,9 +79,6 @@ class Connection:
             raise RuntimeError("ERROR: {} {}".format(repr(recv), error))
 
         return True
-
-    async def check_status(self):
-        return await self._check_status()
 
     ##############################################################################################################
     #

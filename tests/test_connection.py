@@ -46,7 +46,7 @@ class TestConnection(unittest.TestCase):
     async def test_connect_with_timeout(self):
         with self.assertRaises(RuntimeError):
             with patch('asyncio.open_connection', side_effect=asyncio.TimeoutError, new_callable=AsyncMock):
-                conn = Connection()
+                conn = Connection(timeout=1)
                 await conn.connect()
 
 
