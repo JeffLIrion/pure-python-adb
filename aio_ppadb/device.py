@@ -51,7 +51,7 @@ class Device(Transport, Serial, Input, Utils, WM, Traffic, CPUStat, BatteryStats
         sync_conn = await self.sync()
         sync = Sync(sync_conn)
 
-        with sync_conn:
+        async with sync_conn:
             await sync.push(src, dest, mode, progress)
 
     async def push(self, src, dest, mode=0o644, progress=None):
@@ -59,7 +59,7 @@ class Device(Transport, Serial, Input, Utils, WM, Traffic, CPUStat, BatteryStats
             raise FileNotFoundError("Cannot find {}".format(src))
 
         if os.path.isfile(src):
-            self._push(src, dest, mode, progress)
+            await self._push(src, dest, mode, progress)
 
         elif os.path.isdir(src):
             basename = os.path.basename(src)
@@ -76,7 +76,7 @@ class Device(Transport, Serial, Input, Utils, WM, Traffic, CPUStat, BatteryStats
         sync_conn = await self.sync()
         sync = Sync(sync_conn)
 
-        with sync_conn:
+        async with sync_conn:
             return await sync.pull(src, dest)
 
     def install(self, path,

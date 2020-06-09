@@ -81,16 +81,20 @@ class Sync:
                 if flag == Protocol.FAIL:
                     return (await self._read_data()).decode('utf-8')
 
-    def _integer(self, little_endian):
+    @staticmethod
+    def _integer(little_endian):
         return struct.unpack("<I", little_endian)
 
-    def _little_endian(self, n):
+    @staticmethod
+    def _little_endian(n):
         return struct.pack('<I', n)
 
     async def _read_data(self):
         length = self._integer(await self.connection.read(4))[0]
         data = bytearray()
+        print("length = {}".format(length))
         while len(data) < length:
+            print("len(data) = {}".format(len(data)))
             data += await self.connection.read(length - len(data))
         return data
 
