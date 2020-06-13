@@ -1,11 +1,11 @@
 import re
 import os
 
-from .command.transport import Transport
-from .sync import Sync
+from ppadb.command.transport_async import TransportAsync
+from ppadb.sync import Sync
 
 
-class DeviceAsync(Transport):
+class DeviceAsync(TransportAsync):
     INSTALL_RESULT_PATTERN = "(Success|Failure|Error)\s?(.*)"
     UNINSTALL_RESULT_PATTERN = "(Success|Failure.*|.*Unknown package:.*)"
 

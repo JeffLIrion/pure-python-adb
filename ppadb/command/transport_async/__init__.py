@@ -5,7 +5,7 @@ import time
 _LOGGER = logging.getLogger(__name__)
 
 
-class Transport:
+class TransportAsync:
     async def transport(self, connection):
         cmd = "host:transport:{}".format(self.serial)
         await connection.send(cmd)
