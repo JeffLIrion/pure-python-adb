@@ -1,4 +1,4 @@
-"""Unit tests for `Client` class.
+"""Unit tests for the `ClientAsync` class.
 
 """
 
@@ -10,15 +10,15 @@ from unittest.mock import patch
 
 sys.path.insert(0, '..')
 
-from ppadb.client import Client
+from ppadb.client_async import ClientAsync
 
 from .async_wrapper import AsyncMock, awaiter
 from .patchers import FakeStreamReader, FakeStreamWriter
 
 
-class TestClient(unittest.TestCase):
+class TestClientAsync(unittest.TestCase):
     def setUp(self):
-        self.client = Client()
+        self.client = ClientAsync()
 
     @awaiter
     async def test_create_connection_fail(self):

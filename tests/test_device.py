@@ -1,4 +1,4 @@
-"""Unit tests for `Client` class.
+"""Unit tests for the `Device` class.
 
 """
 
@@ -11,7 +11,7 @@ from unittest.mock import mock_open, patch
 
 sys.path.insert(0, '..')
 
-from ppadb.client import Client
+from ppadb.client_async import ClientAsync
 from ppadb.protocol import Protocol
 from ppadb.sync import Sync
 
@@ -27,7 +27,7 @@ PNG_IMAGE_NEEDS_REPLACING = PNG_IMAGE[:5] + b'\r' + PNG_IMAGE[5:]
 class TestDevice(unittest.TestCase):
     @awaiter
     async def setUp(self):
-        self.client = Client()
+        self.client = ClientAsync()
 
         with patch('asyncio.open_connection', return_value=(FakeStreamReader(), FakeStreamWriter()), new_callable=AsyncMock):
             with patch('{}.FakeStreamReader.read'.format(__name__), new_callable=AsyncMock, side_effect=[b'OKAY', b'000b', b'serial test']):

@@ -20,7 +20,7 @@ classifiers = [
 ]
 
 setup(
-    name='aio-pure-python-adb',
+    name='ppadb',
     version="0.2.5-dev",
     description='Pure python implementation of the adb client',
     long_description=readme + '\n\n' + history,
