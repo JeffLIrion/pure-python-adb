@@ -11,9 +11,9 @@ from unittest.mock import mock_open, patch
 
 sys.path.insert(0, '..')
 
-from aio_ppadb.client import Client
-from aio_ppadb.protocol import Protocol
-from aio_ppadb.sync import Sync
+from ppadb.client import Client
+from ppadb.protocol import Protocol
+from ppadb.sync import Sync
 
 from .async_wrapper import AsyncMock, awaiter
 from .patchers import FakeStreamReader, FakeStreamWriter
@@ -72,7 +72,7 @@ class TestDevice(unittest.TestCase):
             pass
 
         filedata = b'Ohayou sekai.\nGood morning world!'
-        with patch('os.path.exists', return_value=True), patch('os.path.isfile', return_value=True), patch('aio_ppadb.device.open', mock_open(read_data=filedata)), patch('os.stat', return_value=os.stat_result((123,) * 10)), patch('aio_ppadb.sync.open', mock_open(read_data=filedata)):
+        with patch('os.path.exists', return_value=True), patch('os.path.isfile', return_value=True), patch('ppadb.device.open', mock_open(read_data=filedata)), patch('os.stat', return_value=os.stat_result((123,) * 10)), patch('ppadb.sync.open', mock_open(read_data=filedata)):
             with patch('asyncio.open_connection', return_value=(FakeStreamReader(), FakeStreamWriter()), new_callable=AsyncMock):
                 with patch('{}.FakeStreamReader.read'.format(__name__), new_callable=AsyncMock, side_effect=[b'OKAY', b'OKAY', b'OKAY', PNG_IMAGE_NEEDS_REPLACING, b'', b'OKAY']):
                     await self.device.push('src', 'dest', progress=progress)
@@ -80,14 +80,14 @@ class TestDevice(unittest.TestCase):
     @awaiter
     async def test_push_dir(self):
         with patch('os.path.exists', return_value=True), patch('os.path.isfile', return_value=False), patch('os.path.isdir', return_value=True), patch('os.walk', return_value=[('root1', 'dirs1', 'files1'), ('root2', 'dirs2', 'files2')]):
-            with patch('aio_ppadb.device.Device.shell', new_callable=AsyncMock), patch('aio_ppadb.device.Device._push', new_callable=AsyncMock):
+            with patch('ppadb.device.Device.shell', new_callable=AsyncMock), patch('ppadb.device.Device._push', new_callable=AsyncMock):
                 await self.device.push('src', 'dest')
 
     @awaiter
     async def test_pull(self):
         with patch('asyncio.open_connection', return_value=(FakeStreamReader(), FakeStreamWriter()), new_callable=AsyncMock):
             with patch('{}.FakeStreamReader.read'.format(__name__), new_callable=AsyncMock, side_effect=[b'OKAY', b'OKAY', b'DATA', Sync._little_endian(4), b'TEST', b'DONE', b'OKAY']):
-                with patch('aio_ppadb.sync.open', mock_open()):
+                with patch('ppadb.sync.open', mock_open()):
                     #with self.assertRaises(RuntimeError):
                     await self.device.pull('src', 'dest')
 
@@ -95,7 +95,7 @@ class TestDevice(unittest.TestCase):
     async def test_pull_fail(self):
         with patch('asyncio.open_connection', return_value=(FakeStreamReader(), FakeStreamWriter()), new_callable=AsyncMock):
             with patch('{}.FakeStreamReader.read'.format(__name__), new_callable=AsyncMock, side_effect=[b'OKAY', b'OKAY', b'FAIL', Sync._little_endian(4), b'TEST', b'DONE', b'OKAY']):
-                with patch('aio_ppadb.sync.open', mock_open()):
+                with patch('ppadb.sync.open', mock_open()):
                     #with self.assertRaises(RuntimeError):
                     await self.device.pull('src', 'dest')
 

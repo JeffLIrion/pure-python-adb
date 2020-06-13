@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, '..')
 
-from aio_ppadb.connection import Connection
+from ppadb.connection import Connection
 
 from .async_wrapper import AsyncMock, awaiter
 from .patchers import FakeStreamReader, FakeStreamWriter

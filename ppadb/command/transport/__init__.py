@@ -2,8 +2,6 @@ import logging
 import re
 import time
 
-from ppadb import ClearError
-
 _LOGGER = logging.getLogger(__name__)
 
 
