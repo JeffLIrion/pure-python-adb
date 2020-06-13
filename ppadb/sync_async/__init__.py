@@ -2,15 +2,14 @@ import logging
 import struct
 import os
 
-from .stats import S_IFREG
-
-from ..protocol import Protocol
+from ppadb.protocol import Protocol
+from ppadb.sync.stats import S_IFREG
 
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class Sync:
+class SyncAsync:
     DATA_MAX_LENGTH = 65536
 
     def __init__(self, connection):

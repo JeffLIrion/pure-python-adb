@@ -2,7 +2,7 @@ import re
 import os
 
 from ppadb.command.transport_async import TransportAsync
-from ppadb.sync import Sync
+from ppadb.sync_async import SyncAsync
 
 
 class DeviceAsync(TransportAsync):
@@ -24,7 +24,7 @@ class DeviceAsync(TransportAsync):
     async def _push(self, src, dest, mode, progress):
         # Create a new connection for file transfer
         sync_conn = await self.sync()
-        sync = Sync(sync_conn)
+        sync = SyncAsync(sync_conn)
 
         async with sync_conn:
             await sync.push(src, dest, mode, progress)
@@ -49,7 +49,7 @@ class DeviceAsync(TransportAsync):
 
     async def pull(self, src, dest):
         sync_conn = await self.sync()
-        sync = Sync(sync_conn)
+        sync = SyncAsync(sync_conn)
 
         async with sync_conn:
             return await sync.pull(src, dest)
