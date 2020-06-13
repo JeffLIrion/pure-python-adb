@@ -5,7 +5,7 @@ from .command.transport import Transport
 from .sync import Sync
 
 
-class Device(Transport):
+class DeviceAsync(Transport):
     INSTALL_RESULT_PATTERN = "(Success|Failure|Error)\s?(.*)"
     UNINSTALL_RESULT_PATTERN = "(Success|Failure.*|.*Unknown package:.*)"
 

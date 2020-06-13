@@ -1,4 +1,4 @@
-from ...device import Device
+from ...device_async import DeviceAsync
 
 
 class Host:
@@ -23,6 +23,6 @@ class Host:
             if not line:
                 break
 
-            devices.append(Device(self, line.split()[0]))
+            devices.append(DeviceAsync(self, line.split()[0]))
 
         return devices
