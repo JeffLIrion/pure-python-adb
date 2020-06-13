@@ -105,19 +105,6 @@ class TestProtocol(unittest.TestCase):
         for i in range(16 ** 2):
             self.assertEqual(i, Protocol.decode_length(Protocol.encode_length(i)))
 
-'''async def shell(self, cmd, handler=None, timeout=None):
-        conn = await self.create_connection(timeout=timeout)
-
-        cmd = "shell:{}".format(cmd)
-        await conn.send(cmd)
-
-        if handler:
-            handler(conn)
-        else:
-            result = await conn.read_all()
-            await conn.close()
-            return result.decode('utf-8')'''
-
 
 if __name__ == '__main__':
     unittest.main()
