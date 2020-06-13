@@ -8,7 +8,7 @@ from .protocol import Protocol
 _LOGGER = logging.getLogger(__name__)
 
 
-class Connection:
+class ConnectionAsync:
     def __init__(self, host='localhost', port=5037, timeout=None):
         self.host = host
         self.port = int(port)

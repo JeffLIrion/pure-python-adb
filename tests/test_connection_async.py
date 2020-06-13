@@ -1,4 +1,4 @@
-"""Unit tests for `Connection` class.
+"""Unit tests for `ConnectionAsync` class.
 
 """
 
@@ -10,17 +10,17 @@ from unittest.mock import patch
 
 sys.path.insert(0, '..')
 
-from ppadb.connection import Connection
+from ppadb.connection_async import ConnectionAsync
 
 from .async_wrapper import AsyncMock, awaiter
 from .patchers import FakeStreamReader, FakeStreamWriter
 
 
-class TestConnection(unittest.TestCase):
+class TestConnectionAsync(unittest.TestCase):
     @awaiter
     async def test_connect_close(self):
         with patch('asyncio.open_connection', return_value=(FakeStreamReader(), FakeStreamWriter()), new_callable=AsyncMock):
-            conn = Connection()
+            conn = ConnectionAsync()
             await conn.connect()
             self.assertIsNotNone(conn.reader)
             self.assertIsNotNone(conn.writer)
@@ -32,7 +32,7 @@ class TestConnection(unittest.TestCase):
     @awaiter
     async def test_connect_close_catch_oserror(self):
         with patch('asyncio.open_connection', return_value=(FakeStreamReader(), FakeStreamWriter()), new_callable=AsyncMock):
-            conn = Connection()
+            conn = ConnectionAsync()
             await conn.connect()
             self.assertIsNotNone(conn.reader)
             self.assertIsNotNone(conn.writer)
@@ -46,7 +46,7 @@ class TestConnection(unittest.TestCase):
     async def test_connect_with_timeout(self):
         with self.assertRaises(RuntimeError):
             with patch('asyncio.open_connection', side_effect=asyncio.TimeoutError, new_callable=AsyncMock):
-                conn = Connection(timeout=1)
+                conn = ConnectionAsync(timeout=1)
                 await conn.connect()
 
 

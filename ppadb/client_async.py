@@ -1,5 +1,5 @@
 from .command.host import Host
-from .connection import Connection
+from .connection_async import ConnectionAsync
 
 
 class ClientAsync(Host):
@@ -8,7 +8,7 @@ class ClientAsync(Host):
         self.port = port
 
     async def create_connection(self, timeout=None):
-        conn = Connection(self.host, self.port, timeout)
+        conn = ConnectionAsync(self.host, self.port, timeout)
         return await conn.connect()
 
     async def device(self, serial):
